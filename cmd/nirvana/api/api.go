@@ -87,6 +87,7 @@ func (o *apiOptions) Run(cmd *cobra.Command, args []string) error {
 		log.Infof("No packages are specified, defaults to %s", defaultAPIsPath)
 	}
 
+	fmt.Printf("args: %v\n",args)
 	config, definitions, err := buildutils.Build(args...)
 	if err != nil {
 		return err

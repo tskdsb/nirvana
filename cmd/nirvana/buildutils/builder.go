@@ -68,6 +68,7 @@ func Build(paths ...string) (*project.Config, *api.Definitions, error) {
 		}
 		log.Warning("can't find project file, instead by default config")
 	}
+	fmt.Printf("paths: %v\n",paths)
 	for _, path := range paths {
 		dir, err := filepath.Abs(path)
 		if err != nil {
@@ -77,6 +78,7 @@ func Build(paths ...string) (*project.Config, *api.Definitions, error) {
 			return nil, nil, fmt.Errorf("path %s is not in root dir %s", path, config.Root)
 		}
 	}
+	fmt.Printf("paths2: %v\n",paths)
 	builder := builder.NewAPIBuilder(config.Root, project.Subdirectories(false, paths...)...)
 	definitions, err := builder.Build()
 	if err != nil {

@@ -54,6 +54,7 @@ func NewAPIBuilder(root string, paths ...string) *APIBuilder {
 func (b *APIBuilder) Build() (*api.Definitions, error) {
 	analyzer := api.NewAnalyzer(b.root)
 	parents := []string{}
+	fmt.Printf("b.paths: %v\n",b.paths)
 	for _, path := range b.paths {
 		path, err := project.PackageForPath(path)
 		if err != nil {
@@ -65,6 +66,7 @@ func (b *APIBuilder) Build() (*api.Definitions, error) {
 		}
 		parents = append(parents, pkg.Path())
 	}
+	fmt.Printf("parents: %v\n",parents)
 
 	packages := map[string]bool{}
 	for _, parent := range parents {

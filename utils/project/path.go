@@ -83,6 +83,7 @@ func PackageForPath(directory string) (string, error) {
 // Subdirectories walkthroughs all subdirectories. The results contains itself.
 // If a path is non-existent or not in GOPATH, the path will be ignored.
 func Subdirectories(vendor bool, paths ...string) []string {
+	fmt.Printf("Subdirectories paths: %v\n",paths)
 	walked := map[string]bool{}
 	goDir := map[string]bool{}
 	for _, path := range paths {
@@ -92,6 +93,7 @@ func Subdirectories(vendor bool, paths ...string) []string {
 			continue
 		}
 		err = filepath.Walk(absPath, func(path string, info os.FileInfo, err error) error {
+			fmt.Printf("walk err: %v\n",err)
 			if err != nil {
 				return filepath.SkipDir
 			}
@@ -105,6 +107,7 @@ func Subdirectories(vendor bool, paths ...string) []string {
 				walked[path] = true
 				return nil
 			}
+			fmt.Printf("check .go: %v\n",path)
 			if strings.HasSuffix(path, ".go") {
 				dir := filepath.Dir(path)
 				goDir[dir] = true
@@ -113,6 +116,7 @@ func Subdirectories(vendor bool, paths ...string) []string {
 		})
 		_ = err
 	}
+	fmt.Printf("go dir paths: %v\n",goDir)
 	results := []string{}
 	for path := range goDir {
 		results = append(results, path)
